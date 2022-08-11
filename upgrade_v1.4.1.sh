@@ -8,11 +8,12 @@ echo -e "$GREEN_COLOR YOUR NODE WILL BE UPDATED TO VERSION: $VERSION ON BLOCK NU
 for((;;)); do
 height=$(bcnad status |& jq -r ."SyncInfo"."latest_block_height")
 if ((height>=$BLOCK)); then
+sudo service bcnad stop
 cd $HOME
 rm bcna -rf
 git clone https://github.com/BitCannaGlobal/bcna.git --branch $VERSION
 cd bcna
-make build
+make install
 sudo chmod +x ./build/bcnad && sudo mv ./build/bcnad /usr/local/bin/bcnad
 echo "restart the system..."
 sudo systemctl restart bcnad
